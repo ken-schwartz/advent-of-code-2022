@@ -13,14 +13,16 @@ sorted_total_calories =
   |> String.split("\n\n")
   |> Enum.map(&String.split/1)
   |> Enum.map(&Day1.sum_calorie_strings/1)
-  |> Enum.sort()
-  |> Enum.reverse()
+  |> Enum.sort(&(&1 >= &2))
 
 # part one
 [head | _] = sorted_total_calories
 IO.puts("Part 1: #{head}")
 
 # part two
-[first, second, third | _] = sorted_total_calories
-top_three_calories = Enum.sum([first, second, third])
+top_three_calories =
+  sorted_total_calories
+  |> Enum.take(3)
+  |> Enum.sum()
+
 IO.puts("Part 2: #{top_three_calories}")
